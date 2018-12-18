@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.yyy.model.domain.User;
+import com.yyy.domain.User;
 import com.yyy.service.UserService;
 
 /**
@@ -33,25 +33,26 @@ public class GogoCtrl {
 	private static final String defName = "no good , %s!";
 	private final AtomicLong id = new AtomicLong();
 	
-	//@Autowired
-	//UserService userService;
+	@Autowired
+	UserService userService;
 
 	@RequestMapping("/test")
 	@ResponseBody
 	public User test(@RequestParam(value="name", defaultValue="yyyyyyy") String name) {
 		User user = new User();
-		user.setUserName("first");
-		//userService.addUser(user);
+		user.setName("first");
+		userService.addUser(user);
 		
 		System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb ");
 		System.out.println(name);
 		return user;
 	}
 	
-	@RequestMapping("/getAll")
+	@RequestMapping(value="/getAll", method = RequestMethod.GET)
+	@ResponseBody
 	public List<User> getAll() {
-		return null;
-		//return userService.getAllUser();
+		//return null;
+		return userService.getAllUser();
 	}
 	
 	@RequestMapping("/page")
